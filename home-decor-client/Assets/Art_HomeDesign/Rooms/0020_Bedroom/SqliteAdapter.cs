@@ -8,7 +8,8 @@ public class SqliteAdapter : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
+        Debug.Log("==> Start SqliteAdapter");
+
         // Read all values from the table.
         IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
@@ -19,33 +20,25 @@ public class SqliteAdapter : MonoBehaviour
         {
             var id = dataReader.GetInt32(0);
             var objectName = dataReader.GetString(1);
-            var order = dataReader.GetInt32(2);
 
-            Debug.Log($"id: {id}, objectName: {objectName}, orderNo: {order}");
+            Debug.Log($"id: {id}, objectName: {objectName}");
+
+            var obj = GameObject.Find(objectName);
+            obj.SetActive(false);
         }
-
-        AddDecorationOBject();
 
         // Remember to always close the connection at the end.
         dbConnection.Close();
 
-        Debug.Log("Close");
+        Debug.Log("==> Did start SqliteAdapter");
     }
 
-    private void AddDecorationOBject()
+    private void AddDecorationObject(string objectName)
     {
         // Insert hits into the table.
         IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = @"
-            INSERT INTO DecorationOrder (
-                object_name,
-                order_no
-            )
-            VALUES (
-                'bed',
-                1
-            )";
+        dbCommandInsertValue.CommandText = $"INSERT INTO DecorationOrder (object_name) VALUES ('{objectName}')";
         dbCommandInsertValue.ExecuteNonQuery();
 
         // Remember to always close the connection at the end.
@@ -64,8 +57,7 @@ public class SqliteAdapter : MonoBehaviour
         dbCommandCreateTable.CommandText = @"
             CREATE TABLE IF NOT EXISTS DecorationOrder (
                 id INTEGER AUTO_INCREMENT PRIMARY KEY,
-                object_name VARCHAR(255) NOT NULL,
-                order_no INTEGER
+                object_name VARCHAR(255) NOT NULL
             )
             ";
         dbCommandCreateTable.ExecuteReader();
