@@ -1,14 +1,15 @@
+﻿using System.Data;
 using UnityEngine;
-using System.Data;
-using Mono.Data.Sqlite; 
+using Mono.Data.Sqlite;
+using System.Collections.Generic;
+using System.Collections;
 
-public class SqliteAdapter : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    [SerializeField] private int hitCount = 0;
+    public void onReplay() {
+        Debug.Log("On Replay");
 
-    void Start()
-    {
-        Debug.Log("==> Start SqliteAdapter");
+        var furnitures = new List<GameObject>();
 
         // Read all values from the table.
         IDbConnection dbConnection = CreateAndOpenDatabase();
@@ -23,26 +24,29 @@ public class SqliteAdapter : MonoBehaviour
 
             Debug.Log($"id: {id}, objectName: {objectName}");
 
-            // var obj = GameObject.Find(objectName);
-            // obj.SetActive(false);
+            var obj = GameObject.Find(objectName);
+            furnitures.Add(obj);
         }
 
-        // Remember to always close the connection at the end.
         dbConnection.Close();
 
-        Debug.Log("==> Did start SqliteAdapter");
+        // Hide all furnitures
+        foreach(var obj in furnitures)
+        {
+            obj.SetActive(false);
+        }
+
+        // Show all furnitures again
+        StartCoroutine(ShowObjectsWithDelay(furnitures));
     }
 
-    private void AddDecorationObject(string objectName)
+    private IEnumerator ShowObjectsWithDelay(List<GameObject> gameObjects)
     {
-        // Insert hits into the table.
-        IDbConnection dbConnection = CreateAndOpenDatabase();
-        IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = $"INSERT INTO DecorationOrder (object_name) VALUES ('{objectName}')";
-        dbCommandInsertValue.ExecuteNonQuery();
-
-        // Remember to always close the connection at the end.
-        dbConnection.Close();
+        foreach(var obj in gameObjects)
+        {
+            yield return new WaitForSeconds(0.5f);
+            obj.SetActive(true);
+        }
     }
 
     private IDbConnection CreateAndOpenDatabase()
