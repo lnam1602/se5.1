@@ -175,6 +175,7 @@ public class VisualObjectBehaviour : MonoBehaviour
         this.visualObject.Init(roomAccessor);
     }
 
+
     public void Init(GraphicsSceneConfig.VisualObject visualObject)
     {
         this.visualObject = visualObject;
