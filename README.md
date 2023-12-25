@@ -1,12 +1,17 @@
 
 # HOME DECOR
 
-Tiêu đề vắn tắt dự án
+Lập trình game casual thể loại match 3 kết hợp trang trí nhà.
 
-**Thành viên nhóm:**
-Liệt kê thành viên nhóm phát triển dự án
+**Thành viên nhóm:**  
+Lê Đình Nam (Trưởng nhóm)  
+Nguyễn Thế Mạnh  
+Lương Mai Quỳnh  
+Nguyễn Trần Quang Mạnh  
+Vũ Văn Trí  
 # 1. Mô tả game
-Mô tả cô đọng trong 5-10 dòng
+Tựa game home decorator (trang trí nhà cửa) kết hợp với game match 3. Trang trí căn nhà gồm có nhiều phòng, mỗi phòng có nhiều đồ vật. Để trang trí đồ vật mới vào nhà, người chơi cần có số sao (tương tự như tiền) tương ứng để đổi lấy đồ vật trang trí phòng. Mỗi đồ vật trang trí sẽ có 3 loại. Người chơi có thể thay đổi loại 
+của đồ vật mà không mất sao. Người chơi có thể kiếm thêm sao bằng cách chơi game match 3 (tương tự game candy crush) với mỗi màn tương ứng hoàn thành sẽ được 1 sao. Đồ vật trang trí trong nhà thường là 1 - 2 sao. Độ khó của các màn chơi match 3 là khác nhau. Sẽ có một số phần thưởng thêm cho game match 3 như số mạng chơi vô hạn (mặc định là 5), etc.
 
 ## 1.1. Các màn hình chính của game
 Mô tả chi tiết các màn hình của game
@@ -18,6 +23,7 @@ Các usecase của game này được bố trí vào 2 phân loại: thiết k�
 # 2. Các sửa đổi cho game
 Mô tả chi tiết các sửa đổi trong game, bao gồm hình ảnh, thuyết minh, thuật toán hoặc các Class hay method thêm/sửa/xóa
 ## 2.1. Thay đổi 1
+**Thêm chức năng Replay: Xem lại quá trình trang trí từng đồ vật trong 1 căn phòng**
 ## 2.2. Thay đổi 2
 
 # 3. Hướng dẫn Khởi tạo dự án
