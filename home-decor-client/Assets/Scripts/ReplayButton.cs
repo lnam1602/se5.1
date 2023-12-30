@@ -44,8 +44,6 @@ public class ReplayButton : MonoBehaviour
         StartCoroutine(ShowObjectsWithDelay(furnitures));
     }
 
-
-
     private IEnumerator ShowObjectsWithDelay(List<GameObject> gameObjects)
     {
 
@@ -77,7 +75,5 @@ public class ReplayButton : MonoBehaviour
 
         return dbConnection;
     }
-
-    public List<VisualObjectBehaviour> visualObjectBehaviours = new List<VisualObjectBehaviour>();
 }
 
