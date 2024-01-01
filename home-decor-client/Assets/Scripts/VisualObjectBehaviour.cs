@@ -184,6 +184,7 @@ public class VisualObjectBehaviour : MonoBehaviour
             VisualObjectVariation item = this.CreateVariation(variation);
             this.variations.Add(item);
             this.allVariations.Add(item);
+            
         }
         if (visualObject.hasDefaultVariation)
         {

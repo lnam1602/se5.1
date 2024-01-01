@@ -4,17 +4,24 @@ using Mono.Data.Sqlite;
 using System.Collections.Generic;
 using System.Collections;
 
-public class UIController : MonoBehaviour
+
+public class BedRoomrGirlController : MonoBehaviour
 {
-    public void onReplay() {
+    public GameObject background_default;
+    public GameObject wall_default;
+    public GameObject floor_default;
+    public GameObject wallwindow_default;
+    private Queue<GameObject> objectQueue = new Queue<GameObject>();
+    public void onReplay()
+    {
         Debug.Log("On Replay");
+        // Read all object in GirlsBedroom
 
         var furnitures = new List<GameObject>();
-
         // Read all values from the table.
-        IDbConnection dbConnection = CreateAndOpenDatabase();
+        IDbConnection dbConnection = CreateAndOpenDatabase("GirlsBedroom");
         IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
-        dbCommandReadValues.CommandText = "SELECT * FROM DecorationOrder";
+        dbCommandReadValues.CommandText = "SELECT * FROM GirlsBedroom";
         IDataReader dataReader = dbCommandReadValues.ExecuteReader();
 
         while (dataReader.Read())
@@ -24,32 +31,50 @@ public class UIController : MonoBehaviour
 
             Debug.Log($"id: {id}, objectName: {objectName}");
 
-            var obj = GameObject.Find(objectName);
+            GameObject obj = GameObject.Find(objectName);
             furnitures.Add(obj);
         }
 
-        dbConnection.Close();
-
-        // Hide all furnitures
-        foreach(var obj in furnitures)
+        foreach (var obj in furnitures)
         {
             obj.SetActive(false);
         }
 
+        dbConnection.Close();
         // Show all furnitures again
         StartCoroutine(ShowObjectsWithDelay(furnitures));
     }
 
+    void AddGameObject()
+    {
+        objectQueue.Enqueue(background_default);
+        objectQueue.Enqueue(wall_default);
+        objectQueue.Enqueue(floor_default);
+        objectQueue.Enqueue(wallwindow_default);
+    }
+
     private IEnumerator ShowObjectsWithDelay(List<GameObject> gameObjects)
     {
-        foreach(var obj in gameObjects)
+        AddGameObject();
+        while (objectQueue.Count > 0)
+        {
+            // Lấy đối tượng đầu hàng đợi
+            GameObject currentObj = objectQueue.Dequeue();
+
+            // Hiển thị đối tượng
+            currentObj.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(0.5f); // Đổi giá trị độ trễ tại đây
+
+        foreach (var obj in gameObjects)
         {
             yield return new WaitForSeconds(0.5f);
             obj.SetActive(true);
         }
     }
 
-    private IDbConnection CreateAndOpenDatabase()
+    private IDbConnection CreateAndOpenDatabase(string tableName)
     {
         // Open a connection to the database.
         string dbUri = "URI=file:MyDatabase.sqlite";
@@ -58,14 +83,16 @@ public class UIController : MonoBehaviour
 
         // Create a table for the hit count in the database if it does not exist yet.
         IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
-        dbCommandCreateTable.CommandText = @"
-            CREATE TABLE IF NOT EXISTS DecorationOrder (
+        dbCommandCreateTable.CommandText = $@"
+            CREATE TABLE IF NOT EXISTS {tableName} (
                 id INTEGER AUTO_INCREMENT PRIMARY KEY,
                 object_name VARCHAR(255) NOT NULL
             )
-            ";
+        ";
         dbCommandCreateTable.ExecuteReader();
 
         return dbConnection;
     }
+
+    public List<VisualObjectBehaviour> visualObjectBehaviours = new List<VisualObjectBehaviour>();
 }

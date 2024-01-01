@@ -1,8 +1,10 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using GGMatch3;
+using Mono.Data.Sqlite;
 using UnityEngine;
 
 public class DecoratingScene : MonoBehaviour
@@ -465,12 +467,75 @@ public class DecoratingScene : MonoBehaviour
         Color color = this.backgroundColor;
         color.a = 1f;
         mainCamera.backgroundColor = color;
+        SaveOrUpdateRoomName(base.name);
         RoomsBackend.RoomAccessor room = SingletonInit<RoomsBackend>.instance.GetRoom(base.name);
         for (int i = 0; i < this.visualObjectBehaviours.Count; i++)
         {
             this.visualObjectBehaviours[i].Init(room);
+            
         }
+        
         this.InitRuntimeData();
+    }
+
+    public void SaveOrUpdateRoomName(string currentRoomName)
+    {
+        // Tạo kết nối đến cơ sở dữ liệu
+        IDbConnection dbConnection = CreateAndOpenDatabase("RoomCurrent");
+
+        // Truy vấn để đếm số dòng trong bảng
+        IDbCommand dbCommandCountRows = dbConnection.CreateCommand();
+        dbCommandCountRows.CommandText = "SELECT COUNT(*) FROM RoomCurrent"; // Thay "TenBang" bằng tên thực của bảng
+        object res = dbCommandCountRows.ExecuteScalar();
+        int rowCount = Convert.ToInt32(res);
+
+        // Truy vấn kiểm tra xem có dòng dữ liệu nào trong bảng không
+        IDbCommand dbCommandCheckIfExists = dbConnection.CreateCommand();
+        dbCommandCheckIfExists.CommandText = $"SELECT COUNT(*) FROM RoomCurrent WHERE object_name = '{currentRoomName}'";
+        object result = dbCommandCheckIfExists.ExecuteScalar();
+        int count = Convert.ToInt32(result);
+
+        if (rowCount == 0)
+        {
+            // Nếu không có dữ liệu trong bảng, thực hiện lệnh INSERT để thêm dòng mới
+            IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
+            dbCommandInsertValue.CommandText = $"INSERT INTO RoomCurrent (object_name) VALUES ('{currentRoomName}')";
+            dbCommandInsertValue.ExecuteNonQuery();
+        }
+
+        if (count == 0)
+        {
+            // Thực hiện lệnh UPDATE để cập nhật phòng
+            IDbCommand dbCommandUpdateValue = dbConnection.CreateCommand();
+            dbCommandUpdateValue.CommandText = $"UPDATE RoomCurrent SET object_name = '{currentRoomName}' WHERE id = 1";
+            dbCommandUpdateValue.ExecuteNonQuery();
+        }
+
+        // Đóng kết nối sau khi thực hiện xong
+        dbConnection.Close();
+    }
+
+
+    private IDbConnection CreateAndOpenDatabase(string tableName)
+    {
+        // Open a connection to the database.
+        string dbUri = "URI=file:MyDatabase.sqlite";
+        IDbConnection dbConnection = new SqliteConnection(dbUri);
+        dbConnection.Open();
+
+        // Create a command for creating a table in the database if it does not exist yet.
+        IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
+        dbCommandCreateTable.CommandText = $@"
+            CREATE TABLE IF NOT EXISTS {tableName} (
+                id INTEGER AUTO_INCREMENT PRIMARY KEY,
+                object_name VARCHAR(255) NOT NULL
+            )
+        ";
+
+        // Execute the query to create the table
+        dbCommandCreateTable.ExecuteNonQuery();
+
+        return dbConnection;
     }
 
     public void ZoomIn(VisualObjectBehaviour visualObjectBehaviour)

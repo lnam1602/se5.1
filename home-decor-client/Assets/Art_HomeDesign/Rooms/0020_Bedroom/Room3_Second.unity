@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 994305772}
   - component: {fileID: 994305773}
   m_Layer: 0
-  m_Name: UIController
+  m_Name: BedroomController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,6 +349,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a42cc1c18c3a544872f7b97356ede2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background_default: {fileID: 1790424290772914701}
+  ceiling_default: {fileID: 1790424290772914684}
+  wall_default: {fileID: 1790424290772914556}
+  wallright_default: {fileID: 1790424290772914651}
+  floor_default: {fileID: 1790424290772914653}
+  visualObjectBehaviours: []
 --- !u!1 &1211939978
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +507,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 994305773}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_TargetAssemblyTypeName: BedroomController, Assembly-CSharp
         m_MethodName: onReplay
         m_Mode: 1
         m_Arguments:
@@ -550,51 +556,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262095021}
   m_CullTransparentMesh: 1
---- !u!1 &1267589356
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1267589357}
-  - component: {fileID: 1267589358}
-  m_Layer: 0
-  m_Name: SqliteAdapter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1267589357
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267589356}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1060.1548, y: -650.44214, z: -11.168599}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1267589358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267589356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9ae5de4b33ade043ab5bd8c51e0310a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitCount: 0
 --- !u!1 &1790424290772914333
 GameObject:
   m_ObjectHideFlags: 0
@@ -36043,5 +36004,4 @@ SceneRoots:
   - {fileID: 1790424290823246514}
   - {fileID: 552777052}
   - {fileID: 1211939981}
-  - {fileID: 1267589357}
   - {fileID: 994305772}

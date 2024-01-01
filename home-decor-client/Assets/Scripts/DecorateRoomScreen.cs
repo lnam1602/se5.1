@@ -41,6 +41,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
 
     private void ShowConfettiParticle()
     {
+        UnityEngine.Debug.Log("==>>"); 
         GGUtil.SetActive(UnityEngine.Object.Instantiate<GameObject>(this.confettiParticle, base.transform), true);
     }
 
