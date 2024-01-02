@@ -1228,7 +1228,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 default:
                     return false;
             }
-            IL_14E:
+        IL_14E:
             if (!this._003C_003E8__1.isComplete)
             {
                 this._003C_003E2__current = null;
@@ -1242,7 +1242,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
             decorateRoomScreen.scene.AnimateCharacterAlphaTo(0f);
             this._003Ctime_003E5__6 = 0f;
             this._003Cduration_003E5__7 = 0.25f;
-            IL_1C6:
+        IL_1C6:
             if (this._003Ctime_003E5__6 <= this._003Cduration_003E5__7)
             {
                 this._003Ctime_003E5__6 += Time.deltaTime;
@@ -1250,13 +1250,13 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 this._003C_003E1__state = 2;
                 return true;
             }
-            IL_1D4:
+        IL_1D4:
             this._003C_003E8__1 = null;
             this._003CanimationParams_003E5__5 = default(ChangeAnimationArguments);
-            IL_1E7:
+        IL_1E7:
             int num2 = this._003Ci_003E5__3;
             this._003Ci_003E5__3 = num2 + 1;
-            IL_1F7:
+        IL_1F7:
             if (this._003Ci_003E5__3 >= this.animationParamsList.Count)
             {
                 if (this._003CwideBarsShown_003E5__2)
@@ -1409,7 +1409,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 decorateRoomScreen.scene.AnimateCharacterAlphaTo(0f);
             }
             this._003C_003E8__1 = null;
-            IL_E4:
+        IL_E4:
             if (this.onComplete != null)
             {
                 this.onComplete();
@@ -1499,7 +1499,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 }
                 goto IL_151;
             }
-            IL_11E:
+        IL_11E:
             if (this._003Cenumerator_003E5__3.MoveNext())
             {
                 this._003C_003E2__current = null;
@@ -1508,7 +1508,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
             }
             int num2 = this._003Ci_003E5__5;
             this._003Ci_003E5__5 = num2 + 1;
-            IL_13B:
+        IL_13B:
             if (this._003Ci_003E5__5 < this._003Cmessages_003E5__2.Count)
             {
                 string message = this._003Cmessages_003E5__2[this._003Ci_003E5__5];
@@ -1521,7 +1521,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 this._003Cenumerator_003E5__3 = decorateRoomScreen.DoShowMessageEnumerator(message);
                 goto IL_11E;
             }
-            IL_151:
+        IL_151:
             if (this.onComplete != null)
             {
                 this.onComplete();
@@ -1626,7 +1626,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 default:
                     return false;
             }
-            IL_7F:
+        IL_7F:
             if (this._003Cenumerator_003E5__2.MoveNext())
             {
                 this._003C_003E2__current = null;
@@ -1635,20 +1635,20 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
             }
             int num2 = this._003Ci_003E5__3;
             this._003Ci_003E5__3 = num2 + 1;
-            IL_9C:
+        IL_9C:
             if (this._003Ci_003E5__3 < this.messages.Count)
             {
                 string message = this.messages[this._003Ci_003E5__3];
                 this._003Cenumerator_003E5__2 = decorateRoomScreen.DoShowMessageEnumerator(message);
                 goto IL_7F;
             }
-            IL_AF:
+        IL_AF:
             if (this.animationParamsList == null)
             {
                 goto IL_115;
             }
             this._003CanimationParamEnum_003E5__4 = decorateRoomScreen.DoShowCharacterAnimation(this.animationParamsList, new Action(DecorateRoomScreen._003C_003Ec._003C_003E9._003CDoShowMessageEnumerator_003Eb__62_0));
-            IL_101:
+        IL_101:
             if (this._003CanimationParamEnum_003E5__4.MoveNext())
             {
                 this._003C_003E2__current = null;
@@ -1656,7 +1656,7 @@ public class DecorateRoomScreen : UILayer, Match3GameListener
                 return true;
             }
             this._003CanimationParamEnum_003E5__4 = null;
-            IL_115:
+        IL_115:
             if (this.onComplete != null)
             {
                 this.onComplete();

@@ -418,22 +418,22 @@ public class GGSnapshotCloudSync : GGFileIOCloudSync
 			GGSnapshotCloudSync ggsnapshotCloudSync = this._003C_003E4__this;
 			switch (num)
 			{
-			case 0:
-				this._003C_003E1__state = -1;
-				break;
-			case 1:
-				this._003C_003E1__state = -1;
-				goto IL_AD;
-			case 2:
-				this._003C_003E1__state = -1;
-				goto IL_ED;
-			default:
-				return false;
+				case 0:
+					this._003C_003E1__state = -1;
+					break;
+				case 1:
+					this._003C_003E1__state = -1;
+					goto IL_AD;
+				case 2:
+					this._003C_003E1__state = -1;
+					goto IL_ED;
+				default:
+					return false;
 			}
-			IL_29:
+		IL_29:
 			this._003CellapsedSecondsSinceHaveLocalChanges_003E5__2 = 0f;
 			this._003CcloudSyncTimeDelaySeconds_003E5__3 = ((ggsnapshotCloudSync.lastFinishedRequest != null && ggsnapshotCloudSync.lastFinishedRequest.status > GGServerRequestsBackend.ServerRequest.RequestStatus.Success) ? ConfigBase.instance.cloudSyncTimeDelayWhenRequestFails : ConfigBase.instance.cloudSyncTimeDelay);
-			IL_AD:
+		IL_AD:
 			if (!ggsnapshotCloudSync.haveLocalChanges || this._003CellapsedSecondsSinceHaveLocalChanges_003E5__2 < this._003CcloudSyncTimeDelaySeconds_003E5__3)
 			{
 				if (ggsnapshotCloudSync.haveLocalChanges)
@@ -450,7 +450,7 @@ public class GGSnapshotCloudSync : GGFileIOCloudSync
 			}
 			this._003CellapsedSecondsSinceHaveLocalChanges_003E5__2 = 0f;
 			ggsnapshotCloudSync.SynchronizeIfPossible();
-			IL_ED:
+		IL_ED:
 			if (!ggsnapshotCloudSync.isSynchronizationInProgress && !ggsnapshotCloudSync.isInConflict)
 			{
 				goto IL_29;

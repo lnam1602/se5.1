@@ -12,6 +12,7 @@ public class GGSoundSystem : MonoBehaviour
 			GGSoundSystem.MusicSource musicSource = this.musics[i];
 			GGUtil.SetActive(musicSource.source.gameObject, musicSource.musicType == musicType);
 		}
+		UnityEngine.Debug.Log("Music");
 	}
 
 	public static void Play(GGSoundSystem.MusicType musicType)

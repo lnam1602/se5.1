@@ -40,39 +40,39 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: "BackAll"
+  - name: BackAll
     uniqueID: 2096757875
     locked: 0
-  - name: "Default"
+  - name: Default
     uniqueID: 0
     locked: 0
-  - name: "Background"
+  - name: Background
     uniqueID: 3936547037
     locked: 0
-  - name: "Slots"
+  - name: Slots
     uniqueID: 416372931
     locked: 0
-  - name: "Chips"
+  - name: Chips
     uniqueID: 1966917811
     locked: 0
-  - name: "SlotFront"
+  - name: SlotFront
     uniqueID: 1830733791
     locked: 0
-  - name: "FX"
+  - name: FX
     uniqueID: 1776970111
     locked: 0
-  - name: "Foreground"
+  - name: Foreground
     uniqueID: 2308369789
     locked: 0
-  - name: "Map"
+  - name: Map
     uniqueID: 4256255607
     locked: 0
-  - name: "UI"
+  - name: UI
     uniqueID: 3814720771
     locked: 0
-  - name: "UIFX"
+  - name: UIFX
     uniqueID: 268254051
     locked: 0
-  - name: "UIOverlay"
+  - name: UIOverlay
     uniqueID: 354452299
     locked: 0
