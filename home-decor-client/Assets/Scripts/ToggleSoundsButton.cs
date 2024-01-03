@@ -35,8 +35,40 @@ public class ToggleSoundsButton : MonoBehaviour
 	public void ButtonCallback_OnClick()
 	{
 		this.isOff = !this.isOff;
-		this.UpdateVisualState();
-		GGSoundSystem.Play(GGSoundSystem.SFXType.ButtonPress);
+		if (this.name == "Music_Line")
+		{
+			this.UpdateVisualStateMusic();
+		}
+		if (this.name == "Sounds_Line")
+		{
+			this.UpdateVisualStateSound();
+		}
+	}
+
+	private void UpdateVisualStateMusic()
+	{
+		bool flag = !this.isOff;
+		Music.SetActive(flag);
+		GGUtil.Hide(this.widgetsToHide);
+		if (flag)
+		{
+			this.onStyle.Apply();
+			return;
+		}
+		this.offStyle.Apply();
+	}
+
+	private void UpdateVisualStateSound()
+	{
+		bool flag = !this.isOff;
+		Sound.SetActive(flag);
+		GGUtil.Hide(this.widgetsToHide);
+		if (flag)
+		{
+			this.onStyle.Apply();
+			return;
+		}
+		this.offStyle.Apply();
 	}
 
 	private void UpdateVisualState()
@@ -50,7 +82,6 @@ public class ToggleSoundsButton : MonoBehaviour
 		}
 		this.offStyle.Apply();
 	}
-
 	[SerializeField]
 	private ToggleSoundsButton.SoundType soundType;
 
@@ -68,4 +99,7 @@ public class ToggleSoundsButton : MonoBehaviour
 		Music,
 		SoundFx
 	}
+
+	public GameObject Music;
+	public GameObject Sound;
 }

@@ -11,20 +11,22 @@ public class ReplayButton : MonoBehaviour
     public void onReplay()
     {
         Debug.Log("On Replay");
-        // Read all object in room3
-
         IDbConnection dbConnectionRoom = CreateAndOpenDatabase("RoomCurrent");
         IDbCommand dbCommandCheckRoom = dbConnectionRoom.CreateCommand();
         dbCommandCheckRoom.CommandText = $"SELECT object_name FROM RoomCurrent WHERE id = 1";
         object res = dbCommandCheckRoom.ExecuteScalar();
         string room = Convert.ToString(res);
-
         var furnitures = new List<GameObject>();
         // Read all values from the table.
         IDbConnection dbConnection = CreateAndOpenDatabase(room);
         IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
         dbCommandReadValues.CommandText = $@"SELECT * FROM {room}";
         IDataReader dataReader = dbCommandReadValues.ExecuteReader();
+
+        if (room == "Veranda")
+        {
+            fenceDefault.SetActive(true);
+        }
 
         while (dataReader.Read())
         {
@@ -41,10 +43,10 @@ public class ReplayButton : MonoBehaviour
         dbConnectionRoom.Close();
         dbConnection.Close();
         // Show all furnitures again
-        StartCoroutine(ShowObjectsWithDelay(furnitures));
+        StartCoroutine(ShowObjectsWithDelay(furnitures, room));
     }
 
-    private IEnumerator ShowObjectsWithDelay(List<GameObject> gameObjects)
+    private IEnumerator ShowObjectsWithDelay(List<GameObject> gameObjects, string room)
     {
 
         yield return new WaitForSeconds(1f); // Đổi giá trị độ trễ tại đây
@@ -52,6 +54,10 @@ public class ReplayButton : MonoBehaviour
         foreach (var obj in gameObjects)
         {
             yield return new WaitForSeconds(0.5f);
+            if (obj.name.Split("_")[0] == "fence" && room == "Veranda")
+            {
+                fenceDefault.SetActive(false);
+            }
             obj.SetActive(true);
         }
     }
@@ -75,5 +81,7 @@ public class ReplayButton : MonoBehaviour
 
         return dbConnection;
     }
+
+    public GameObject fenceDefault;
 }
 

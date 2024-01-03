@@ -12,7 +12,6 @@ public class GGSoundSystem : MonoBehaviour
 			GGSoundSystem.MusicSource musicSource = this.musics[i];
 			GGUtil.SetActive(musicSource.source.gameObject, musicSource.musicType == musicType);
 		}
-		UnityEngine.Debug.Log("Music");
 	}
 
 	public static void Play(GGSoundSystem.MusicType musicType)
@@ -144,30 +143,39 @@ public class GGSoundSystem : MonoBehaviour
 			return;
 		}
 		GGSoundSystem.SoundFxClip.VariationParameters variation = clip.GetVariation(p.variationIndex);
-		AudioClip clip2 = variation.clip;
-		if (clip2 == null)
+		if (variation.clip == null || variation.volume <= 0f)
 		{
 			return;
 		}
-		if (variation.volume <= 0f)
-		{
-			return;
-		}
-		long num = this.LastPlayingFrameNumber(p.soundType);
+
+		long lastPlayingFrame = LastPlayingFrameNumber(p.soundType);
 		if (p.frameNumber == 0L)
 		{
 			p.frameNumber = (long)Time.frameCount;
 		}
-		if (num == p.frameNumber)
+		if (lastPlayingFrame == p.frameNumber)
 		{
 			return;
 		}
-		GGSoundSystem.AudioSourceData audioSourceData = this.NextAudioSource();
+
+		GGSoundSystem.AudioSourceData audioSourceData = NextAudioSource();
+		if (audioSourceData == null || audioSourceData.audioSource == null)
+		{
+			return;
+		}
+
 		AudioSource audioSource = audioSourceData.audioSource;
-		audioSource.clip = clip2;
+		AudioClip clipToPlay = variation.clip;
+		audioSource.clip = clipToPlay;
 		audioSource.loop = false;
 		audioSource.pitch = variation.pitch;
-		audioSource.volume = variation.volume;
+		audioSource.volume = variation.volume; // Adjusting volume
+
+		// Adjusting distance and rolloff mode
+		audioSource.minDistance = 5f; // Set your desired min distance
+		audioSource.maxDistance = 50f; // Set your desired max distance
+		audioSource.rolloffMode = AudioRolloffMode.Linear; // Set your desired rolloff mode
+
 		audioSource.Play();
 		audioSourceData.frameIndexWhenStart = p.frameNumber;
 		audioSourceData.playedSound = p.soundType;
