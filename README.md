@@ -73,6 +73,18 @@ Mô tả chi tiết các sửa đổi trong game, bao gồm hình ảnh, thuyế
 ## 2.1. Thay đổi 1
 **Thêm chức năng Replay: Xem lại quá trình trang trí từng đồ vật trong 1 căn phòng**
 ## 2.2. Thay đổi 2
+**Thêm một số tính năng có sẵn trong dự án như: âm thanh, điểm danh theo ngày, etc.**
+
+Màn hình Setting
+![image](https://github.com/lnam1602/se5.1/assets/148826929/2904ba63-9248-4dd8-a020-32e90cbf6a38)
+
+Điểm danh hằng ngày nhận quà
+![image](https://github.com/lnam1602/se5.1/assets/148826929/8d919564-73da-423e-a894-46eedc799226)
+
+Màn hình thông báo login
+![image](https://github.com/lnam1602/se5.1/assets/148826929/b9ff6020-ad6f-4445-adc6-3cac12418981)
+
+
 
 # 3. Hướng dẫn Khởi tạo dự án
 ## 3.1. Cài Unity bản từ 2022 trở đi
