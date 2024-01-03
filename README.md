@@ -72,6 +72,61 @@ Khi số tim nhỏ hơn 5, người chơi sẽ phải dừng chơi match 3 một
 Mô tả chi tiết các sửa đổi trong game, bao gồm hình ảnh, thuyết minh, thuật toán hoặc các Class hay method thêm/sửa/xóa
 ## 2.1. Thay đổi 1
 **Thêm chức năng Replay: Xem lại quá trình trang trí từng đồ vật trong 1 căn phòng**
+
+Màn hình game sau khi thêm nút Replay
+![image](https://github.com/lnam1602/se5.1/assets/148826929/af2a21a8-cccb-4f2c-ac82-1e4e7a5727e5)
+
+
+Tính năng Replay ghi lại quá trình trang trí đồ vật trong một căn phòng theo thứ tự người chơi đã lựa chọn.
+
+Cách cài đặt tính năng:  
+Cài đặt phần mềm DB Browser for SQLite  
+Lưu thứ tự các đồ vật người chơi trang trí vào phòng vào cơ sở dữ liệu SQLite  
+![image](https://github.com/lnam1602/se5.1/assets/148826929/e0bed29d-e452-42a3-b556-6b66a0154bff)  
+Tạo file C# để kích hoạt bật tắt các đồ vật và kết nối với button của Unity  
+
+Khi người chơi thêm đồ vật vào phòng, cơ sở dữ liệu sẽ lưu lại các đồ vật theo thứ tự như bảng trên. Khi mình bấm nút Replay, game sẽ đọc file cơ sở dữ liệu, với các dòng là các thược tính, tương ứng với các đồ vật trang trí trong nhà. Khi bấm nút Replay, Các thuộc tính đã tạo trong file C# sẽ được tắt, và hiển thị căn phòng khi chưa trang trí đồ vật. Sau đấy từng dòng tương ứng với thuộc tính trong cơ sở dữ liệu sẽ được đọc, và các thuộc tính đấy sẽ được bật ở trong file C# để hiển thị lên màn hình chơi game
+
+```
+public void onReplay()
+    {
+        Debug.Log("On Replay");
+        IDbConnection dbConnectionRoom = CreateAndOpenDatabase("RoomCurrent");
+        IDbCommand dbCommandCheckRoom = dbConnectionRoom.CreateCommand();
+        dbCommandCheckRoom.CommandText = $"SELECT object_name FROM RoomCurrent WHERE id = 1";
+        object res = dbCommandCheckRoom.ExecuteScalar();
+        string room = Convert.ToString(res);
+        var furnitures = new List<GameObject>();
+        // Read all values from the table.
+        IDbConnection dbConnection = CreateAndOpenDatabase(room);
+        IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
+        dbCommandReadValues.CommandText = $@"SELECT * FROM {room}";
+        IDataReader dataReader = dbCommandReadValues.ExecuteReader();
+
+
+        while (dataReader.Read())
+        {
+            var objectName = dataReader.GetString(1);
+            GameObject obj = GameObject.Find(objectName);
+            furnitures.Add(obj);
+        }
+
+        foreach (var obj in furnitures)
+        {
+            obj.SetActive(false);
+        }
+
+        dbConnectionRoom.Close();
+        dbConnection.Close();
+        // Show all furnitures again
+        StartCoroutine(ShowObjectsWithDelay(furnitures, room));
+    }
+```
+
+Vị trí của nút Replay trong màn hình game  
+![image](https://github.com/lnam1602/se5.1/assets/148826929/b24a406c-ceb7-4274-ba88-4d6627cc353a)
+
+
 ## 2.2. Thay đổi 2
 **Thêm một số tính năng có sẵn trong dự án như: âm thanh, điểm danh theo ngày, etc.**
 
